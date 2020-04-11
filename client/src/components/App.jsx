@@ -15,7 +15,7 @@ class App extends React.Component {
       dashboardData: [] // passed to RightSide component: [ [ 'title', [axes], [ { data }, { data } ] ] ]
     };
 
-    this.GET = this.GET.bind(this);
+    this.POST = this.POST.bind(this);
     this.handleDisplayData = this.handleDisplayData.bind(this);
     this.handleSelectedCharts = this.handleSelectedCharts.bind(this);
   }
@@ -28,6 +28,7 @@ class App extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.selectedChartsChanged !== this.state.selectedChartsChanged) {
+      console.log(this);
       this.POST(this.state.selectedCharts, 'selected', 'charts');
     
     } else if (prevState.selectedCharts !== this.state.selectedCharts) {
@@ -46,10 +47,12 @@ class App extends React.Component {
           this.setState({ displayCharts: data });
           
         // set new auto-generated data
-        } else if (type === 'automatically') {
-          this.setState(prevState => {
-            return { [chart]: [...prevState[chart], data] }
-          });
+        // } else if (type === 'automatically') {
+        //   this.setState(prevState => {
+        //     const newSelectedCharts = {...prevState.selectedCharts};
+        //     newSelectedCharts[chart] ? newSelectedCharts[chart] = [...newSelectedCharts[chart], data] : 
+        //     return { selectedCharts: newSelectedCharts };
+        //   });
 
         // set dashboard data
         } else if (type === 'dashboard') {
@@ -57,7 +60,7 @@ class App extends React.Component {
 
         // set selectedCharts
         } else if (type === 'selected') {
-          this.setState({ selectedCharts: data });
+          this.setState({ selectedCharts: data }); // triggers componentDidUpdate
         }
       })
       .catch(err => console.error(err));
@@ -66,7 +69,14 @@ class App extends React.Component {
   POST(data, a, b) {
     api.POST(data, a, b)
       .then(res => res.json())
-      .then(doc => console.log(doc))
+      .then(data => {
+        if (a === 'selected' && b === 'charts') {
+          this.GET('dashboard', JSON.stringify(this.state.selectedCharts));
+        
+        } else if (a === 'automatically') {
+          this.setState({ displayCharts: data });
+        }
+      })
       .catch(err => console.error(err));
   }
 
@@ -141,7 +151,7 @@ class App extends React.Component {
         <h1>Datakwip Dashboard</h1>
         <div className="App-sides">
           <LeftSide 
-            GET={this.GET}
+            POST={this.POST}
             handleDisplayData={this.handleDisplayData}
             displayCharts={this.state.displayCharts}
             handleSelectedCharts={this.handleSelectedCharts}

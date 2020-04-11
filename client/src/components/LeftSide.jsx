@@ -27,7 +27,7 @@ class LeftSide extends React.Component {
       <div className="LeftSide">
         <section>
           <SelectTemplateAndData 
-            GET={this.props.GET} 
+            POST={this.props.POST} 
             handleDisplayData={this.props.handleDisplayData}
           />
         </section>

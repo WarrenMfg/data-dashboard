@@ -37,7 +37,7 @@ class SelectTemplateAndData extends React.Component {
     const button = e.target.innerText;
 
     if (button === 'Automatically') {
-      this.props.GET('automatically', this.state.chart);
+      this.props.POST({}, 'automatically', this.state.chart);
     } else if (button === 'Manually') {
       console.log('display popup');
     }
@@ -62,8 +62,8 @@ class SelectTemplateAndData extends React.Component {
 
         <section onClick={this.handleDataButtons}>
           <label htmlFor="SelectTemplateAndData-buttons">Generate New Data</label>
-          <button disabled>Automatically</button> 
-          <button disabled>Manually</button>
+          <button type="button" disabled>Automatically</button> 
+          <button type="button" disabled>Manually</button>
         </section>
 
       </div>

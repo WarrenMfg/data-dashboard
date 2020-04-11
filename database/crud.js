@@ -15,7 +15,7 @@ const createOneAutomatically = model => (data) => {
 
 
 const generateNewDataAutomatically = model => async (req, res) => {
-  const chart = req.url.split('/')[2];
+  const { chart } = req.params;
 
   // generate data
   const data = utils[chart]();
@@ -24,7 +24,8 @@ const generateNewDataAutomatically = model => async (req, res) => {
   const doc = await createOneAutomatically(model)(data);
 
   // send it
-  res.send(doc);
+  // res.send(doc);
+  getDisplayCharts(model)(req, res);
 };
 
 
@@ -58,7 +59,7 @@ const getSelectedCharts = model => async (req, res) => {
 
 const getDisplayCharts = model => (req, res) => {
   const { chart } = req.params;
-  console.log(chart);
+
   model.find({ chart }).lean().exec()
     .then(docs => res.send(docs))
     .catch(err => res.send(err));

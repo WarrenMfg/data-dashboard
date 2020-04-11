@@ -7,13 +7,16 @@ require('../database/index.js');
 Router.route('/display/:chart')
   .get(recordController.getDisplayCharts);
 
+Router.route('/automatically/:chart')
+  .post(recordController.generateNewDataAutomatically);
+
+  
 // Dashboard
 Router.route('/dashboard/:selectedCharts')
   .get(recordController.getSelectedChartsData);
 
 // Pie
-Router.route('/automatically/pie')
-  .get(recordController.generateNewDataAutomatically);
+
 
 // Bar
 // Router.route('/bar')
