@@ -1,0 +1,42 @@
+{
+  "name": "datakwip-frontend-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "",
+    "start": "node server/index.js",
+    "startdev": "nodemon server/index.js",
+    "build": "npx webpack"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "server/*",
+      "database/*"
+    ]
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^3.5.2",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.3",
+    "style-loader": "^1.1.3",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {
+    "@amcharts/amcharts4": "^4.9.13",
+    "express": "^4.17.1",
+    "faker": "^4.1.0",
+    "mongoose": "^5.9.7",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}
