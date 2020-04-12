@@ -28,7 +28,6 @@ class App extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.selectedChartsChanged !== this.state.selectedChartsChanged) {
-      console.log(this);
       this.POST(this.state.selectedCharts, 'selected', 'charts');
     
     } else if (prevState.selectedCharts !== this.state.selectedCharts) {
@@ -42,17 +41,10 @@ class App extends React.Component {
     api.GET(type, chart)
       .then(res => res.json())
       .then(data => {
+
         // set display of chart data
         if (type === 'display') {
           this.setState({ displayCharts: data });
-          
-        // set new auto-generated data
-        // } else if (type === 'automatically') {
-        //   this.setState(prevState => {
-        //     const newSelectedCharts = {...prevState.selectedCharts};
-        //     newSelectedCharts[chart] ? newSelectedCharts[chart] = [...newSelectedCharts[chart], data] : 
-        //     return { selectedCharts: newSelectedCharts };
-        //   });
 
         // set dashboard data
         } else if (type === 'dashboard') {
@@ -125,7 +117,7 @@ class App extends React.Component {
         // otherwise, add it
         } else {
           this.setState(prevState => {
-            prevState.selectedCharts[chart].push(id);
+            prevState.selectedCharts[chart].unshift(id);
             return { selectedCharts: prevState.selectedCharts, selectedChartsChanged: prevState.selectedChartsChanged + 1 };
           });
         }

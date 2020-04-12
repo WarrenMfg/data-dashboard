@@ -1,6 +1,5 @@
 import React from "react";
-// import * as am4core from "@amcharts/amcharts4/core";
-// import * as am4charts from "@amcharts/amcharts4/charts";
+import Chart from './Chart.jsx';
 
 
 class RightSide extends React.Component {
@@ -23,9 +22,11 @@ class RightSide extends React.Component {
 
   // UI
   render() {
+    const { dashboardData } = this.props;
+
     return (
       <div className="RightSide">
-        Charts go here!
+        {dashboardData.map(chart => <Chart key={chart._id} chart={chart} />)}
       </div>
     );
   }

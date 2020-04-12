@@ -13,12 +13,15 @@ body {
 
 .App h1 {
   text-align: center;
+  margin: 25px;
+  font-size: 40px;
 }
 
 .App-sides {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-areas: 'LeftSide RightSide';
+  min-height: calc(100vh - 95px);
 }
 
 
@@ -49,4 +52,16 @@ body {
 /* RIGHT SIDE */
 .RightSide {
   grid-area: RightSide;
+}
+
+.Chart-container {
+  /* min-height: 100%; */
+  margin: 20px 0;
+}
+
+.Chart-individual {
+  height: 35vh;
+  /* margin: 20px 0; */
+  /* padding: 20px; */
+  overflow: none;
 }

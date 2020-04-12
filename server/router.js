@@ -3,9 +3,15 @@ const recordController = require('./record.controller');
 const selectedChartsController = require('./selectedCharts.controller');
 require('../database/index.js');
 
+// selectedCharts
+Router.route('/selected/charts')
+  .get(selectedChartsController.getSelectedCharts) // componentDidMount
+  .post(selectedChartsController.updateSelectedCharts);
+
+
 // Global
 Router.route('/display/:chart')
-  .get(recordController.getDisplayCharts);
+  .get(recordController.getDisplayCharts); // dropdown
 
 Router.route('/automatically/:chart')
   .post(recordController.generateNewDataAutomatically);
@@ -30,10 +36,7 @@ Router.route('/dashboard/:selectedCharts')
 // Router.route('/guage')
 //   .get(recordController.getOne);
 
-// Selected Charts
-Router.route('/selected/charts')
-  .get(selectedChartsController.getSelectedCharts)
-  .post(selectedChartsController.updateSelectedCharts);
+
 
 
 module.exports = Router;

@@ -60,7 +60,7 @@ const getSelectedCharts = model => async (req, res) => {
 const getDisplayCharts = model => (req, res) => {
   const { chart } = req.params;
 
-  model.find({ chart }).lean().exec()
+  model.find({ chart }).sort({ _id: -1 }).lean().exec()
     .then(docs => res.send(docs))
     .catch(err => res.send(err));
 
