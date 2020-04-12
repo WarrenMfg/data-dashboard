@@ -1,21 +1,17 @@
 const mongoose = require('mongoose');
 
 const recordSchema = new mongoose.Schema({
-  chart: {
+  type: {
     type: String,
     required: true
   },
-  title: {
-    type: String,
-    required: true
-  }, 
-  axes: { 
-    type: Array, 
-    required: true
-  }, 
   data: { 
-    type: Array, 
+    type: Object, 
     required: true
+  },
+  options: {
+    type: Object,
+    required: false
   }
 });
 

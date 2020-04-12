@@ -30,6 +30,7 @@ class DisplayData extends React.Component {
   // UI
   render() {
     const { chart } = this.props;
+
     return (
       <div 
         className={`DisplayData ${this.state.selected ? 'DisplayData-selected' : ''}`}
@@ -38,9 +39,9 @@ class DisplayData extends React.Component {
 
         <p 
           data-id={chart._id}
-          data-chart={chart.chart}
+          data-type={chart.type}
         >
-          {chart.title}
+          {chart.options.title.text}
         </p>
 
       </div>

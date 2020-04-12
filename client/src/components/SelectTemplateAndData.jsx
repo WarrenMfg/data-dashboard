@@ -54,10 +54,13 @@ class SelectTemplateAndData extends React.Component {
         <label htmlFor="SelectTemplateAndData-chart">Select A Chart</label>
         <select id="SelectTemplateAndData-select" onChange={this.handleSelectChart}>
           <option defaultValue></option>
-          <option value="pie">Pie chart</option>
-          <option value="bar">Bar chart</option>
-          <option value="line">Line chart</option>
-          <option value="guage">Guage chart</option>
+          <option value="pie">Pie</option>
+          <option value="line">Line</option>
+          <option value="bar">Vertical Bar</option>
+          <option value="horizontalBar">Horizontal Bar</option>
+          <option value="radar">Radar</option>
+          <option value="bubble">Bubble</option>
+          <option value="scatter">Scatter</option>
         </select>
 
         <section onClick={this.handleDataButtons}>

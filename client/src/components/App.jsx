@@ -90,12 +90,12 @@ class App extends React.Component {
   // handle clicks on display data to make dashboard chart
   handleSelectedCharts(selection) {
     const id = selection.target.dataset?.id;
-    const chart = selection.target.dataset?.chart;
+    const type = selection.target.dataset?.type;
 
     // if click is valid
     if (id) {
       // get array of selected charts
-      const selectedChartArray = this.state.selectedCharts[chart];
+      const selectedChartArray = this.state.selectedCharts[type];
 
       // if property exists
       if (selectedChartArray) {
@@ -104,11 +104,11 @@ class App extends React.Component {
         // if id is present, then remove
         if (index > -1) {
           this.setState(prevState => {
-            prevState.selectedCharts[chart].splice(index, 1);
+            prevState.selectedCharts[type].splice(index, 1);
 
             // if array is empty, then delete property
-            if (prevState.selectedCharts[chart].length === 0) {
-              delete prevState.selectedCharts[chart];
+            if (prevState.selectedCharts[type].length === 0) {
+              delete prevState.selectedCharts[type];
             }
 
             return { selectedCharts: prevState.selectedCharts, selectedChartsChanged: prevState.selectedChartsChanged + 1 };
@@ -117,7 +117,7 @@ class App extends React.Component {
         // otherwise, add it
         } else {
           this.setState(prevState => {
-            prevState.selectedCharts[chart].unshift(id);
+            prevState.selectedCharts[type].unshift(id);
             return { selectedCharts: prevState.selectedCharts, selectedChartsChanged: prevState.selectedChartsChanged + 1 };
           });
         }
@@ -125,7 +125,7 @@ class App extends React.Component {
       // click is valid but no selectedCharts property yet
       } else {
         this.setState(prevState => {
-          prevState.selectedCharts[chart] = [id];
+          prevState.selectedCharts[type] = [id];
           return { selectedCharts: prevState.selectedCharts, selectedChartsChanged: prevState.selectedChartsChanged + 1 };
         });
       }

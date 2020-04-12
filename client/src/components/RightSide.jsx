@@ -1,5 +1,5 @@
 import React from "react";
-import Chart from './Chart.jsx';
+import Canvas from './Canvas.jsx';
 
 
 class RightSide extends React.Component {
@@ -26,7 +26,7 @@ class RightSide extends React.Component {
 
     return (
       <div className="RightSide">
-        {dashboardData.map(chart => <Chart key={chart._id} chart={chart} />)}
+        {dashboardData.map(chart => <Canvas key={chart._id} chart={chart} />)}
       </div>
     );
   }
