@@ -140,7 +140,7 @@ class App extends React.Component {
     const { displayData, selectedCharts, dashboardData } = this.state;
     return (
       <div className="App">
-        <h1>Datakwip Dashboard</h1>
+        <h1>Data Dashboard</h1>
         <div className="App-sides">
           <LeftSide 
             POST={this.POST}

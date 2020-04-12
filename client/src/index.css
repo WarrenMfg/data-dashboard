@@ -8,7 +8,7 @@
 }
 
 body {
-  margin: 0;
+  margin: 0 20px;
 }
 
 .App h1 {
@@ -32,7 +32,44 @@ body {
 
 .SelectTemplateAndData label {
   display: block;
+  text-align: center;
+  font-size: 30px;
 }
+
+select {
+  display: block;
+  margin: 10px auto;
+  width: 200px;
+  height: 30px;
+  font-size: 16px;
+}
+
+#buttonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+#buttonContainer button {
+  width: 120px;
+  height: 30px;
+  font-size: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.247);
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#buttonContainer button:first-of-type {
+  margin-right: 10px;
+}
+
+#buttonContainer button:hover {
+  
+}
+
+
+
+/* DISPLAYDATA */
 
 .DisplayData {
   cursor: pointer;
@@ -54,14 +91,23 @@ body {
   grid-area: RightSide;
 }
 
-.Chart-container {
-  /* min-height: 100%; */
+canvas {
+  max-width: 50vw;
   margin: 20px 0;
+  padding: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.247);
+  border-radius: 20px;
+  transition: all 0.2s ease;
 }
 
-.Chart-individual {
-  height: 35vh;
-  /* margin: 20px 0; */
-  /* padding: 20px; */
-  overflow: none;
+canvas:hover {
+  box-shadow: 0 0 20px gray;
+}
+
+canvas:first-of-type {
+  margin-top: 0;
+}
+
+canvas:last-of-type {
+  margin-bottom: 0;
 }

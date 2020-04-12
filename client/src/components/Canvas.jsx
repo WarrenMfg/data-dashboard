@@ -14,7 +14,7 @@ class Canvas extends React.Component {
   componentDidMount() {
     const { _id, type, data } = this.props.chart;
     const ctx = document.getElementById(_id).getContext('2d');
-    const canvas = new Chart(ctx, this.props.chart);
+    new Chart(ctx, this.props.chart);
   }
 
   componentWillUnMount() {

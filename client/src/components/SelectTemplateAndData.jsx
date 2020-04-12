@@ -65,8 +65,10 @@ class SelectTemplateAndData extends React.Component {
 
         <section onClick={this.handleDataButtons}>
           <label htmlFor="SelectTemplateAndData-buttons">Generate New Data</label>
-          <button type="button" disabled>Automatically</button> 
-          <button type="button" disabled>Manually</button>
+          <div id="buttonContainer">
+            <button type="button" disabled>Automatically</button> 
+            <button type="button" disabled>Manually</button>
+          </div>
         </section>
 
       </div>
