@@ -30,6 +30,7 @@ class App extends React.Component {
     if (prevState.selectedChartsChanged !== this.state.selectedChartsChanged) {
       this.POST(this.state.selectedCharts, 'selected', 'charts');
     
+    // triggered after componentDidMount
     } else if (prevState.selectedCharts !== this.state.selectedCharts) {
       this.GET('dashboard', JSON.stringify(this.state.selectedCharts));
     }
@@ -148,6 +149,8 @@ class App extends React.Component {
             displayCharts={this.state.displayCharts}
             handleSelectedCharts={this.handleSelectedCharts}
             selectedCharts={selectedCharts[displayData]}
+            displayData={displayData}
+            dashboardData={dashboardData}
           />
           <RightSide 
             dashboardData={dashboardData}

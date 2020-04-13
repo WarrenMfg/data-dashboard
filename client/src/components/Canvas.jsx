@@ -12,6 +12,8 @@ class Canvas extends React.Component {
 
   // LIFECYCLE
   componentDidMount() {
+    Chart.defaults.global.responsive = true;
+    Chart.defaults.global.title.fontSize = 20;
     const { _id, type, data } = this.props.chart;
     const ctx = document.getElementById(_id).getContext('2d');
     new Chart(ctx, this.props.chart);
@@ -29,7 +31,9 @@ class Canvas extends React.Component {
   // UI
   render() {
     return (
-      <canvas id={this.props.chart._id}></canvas>
+      <div className="Canvas">
+        <canvas id={this.props.chart._id}></canvas>
+      </div>
     );
   }
 }

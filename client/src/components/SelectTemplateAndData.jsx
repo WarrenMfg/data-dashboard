@@ -53,7 +53,7 @@ class SelectTemplateAndData extends React.Component {
 
         <label htmlFor="SelectTemplateAndData-chart">Select A Chart</label>
         <select id="SelectTemplateAndData-select" onChange={this.handleSelectChart}>
-          <option defaultValue></option>
+          <option value=""></option>
           <option value="pie">Pie</option>
           <option value="line">Line</option>
           <option value="bar">Vertical Bar</option>

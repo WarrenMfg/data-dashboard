@@ -1,6 +1,7 @@
 /* GLOBAL */
 * {
   font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
 }
 
 *:focus {
@@ -8,26 +9,47 @@
 }
 
 body {
-  margin: 0 20px;
+  height: 100vh;
+  margin: 0;
 }
 
 .App h1 {
   text-align: center;
-  margin: 25px;
+  padding: 25px;
+  margin: 0;
   font-size: 40px;
+  box-shadow: 0 0px 10px gray;
 }
 
 .App-sides {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   grid-template-areas: 'LeftSide RightSide';
-  min-height: calc(100vh - 95px);
+  max-height: calc(100vh - 95px);
+  margin-top: 95px;
+  overflow-y: scroll;
 }
 
 
 /* LEFT SIDE */
 .LeftSide {
   grid-area: LeftSide;
+  position: fixed;
+  top: 115px;
+  width: 50%;
+}
+
+.LeftSide-data {
+  height: calc(100vh - 115px - 178px - 20px); /* vh - top of "Select A Chart" - height of "Select A Chart" */
+  overflow-y: scroll;
+  margin: 0 20px 20px;
+  border: 1px solid rgba(0, 0, 0, 0.247);
+  border-radius: 20px;
+
 }
 
 .SelectTemplateAndData label {
@@ -47,6 +69,7 @@ select {
 #buttonContainer {
   display: flex;
   justify-content: center;
+  padding: 10px 0 20px;
 }
 
 #buttonContainer button {
@@ -63,19 +86,27 @@ select {
   margin-right: 10px;
 }
 
-#buttonContainer button:hover {
-  
+#buttonContainer button:enabled:hover {
+  background-color: rgba(0, 0, 0, 0.247);
 }
-
 
 
 /* DISPLAYDATA */
 
-.DisplayData {
+.DisplayData, .DisplaySelected {
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.DisplayData p {
+.DisplayData:hover, .DisplaySelected:hover {
+  background-color: rgba(0, 0, 0, 0.247);
+}
+
+.DisplayData-selected:hover {
+  background-color: rgb(87, 185, 218);
+}
+
+.DisplayData p, .DisplaySelected p {
   margin: 0;
   padding: 20px;
 }
@@ -85,29 +116,30 @@ select {
 }
 
 
-
 /* RIGHT SIDE */
+
 .RightSide {
   grid-area: RightSide;
+  padding: 20px;
 }
 
-canvas {
-  max-width: 50vw;
-  margin: 20px 0;
+.Canvas {
+  position: relative;
   padding: 20px;
+  margin: 20px 0;
   border: 1px solid rgba(0, 0, 0, 0.247);
   border-radius: 20px;
   transition: all 0.2s ease;
 }
 
-canvas:hover {
+.Canvas:hover {
   box-shadow: 0 0 20px gray;
 }
 
-canvas:first-of-type {
+.Canvas:first-of-type {
   margin-top: 0;
 }
 
-canvas:last-of-type {
+.Canvas:last-of-type {
   margin-bottom: 0;
 }
