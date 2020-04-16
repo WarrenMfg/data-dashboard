@@ -41,7 +41,11 @@ class SelectTemplateAndData extends React.Component {
     if (button === 'Automatically') {
       this.props.POST({}, 'automatically', this.state.chart);
     } else if (button === 'Manually') {
-      this.setState({ manualForm: true });
+      if (this.state.manualForm) {
+        this.setState({ manualForm: false });
+      } else {
+        this.setState({ manualForm: true });
+      }
     }
   }
 

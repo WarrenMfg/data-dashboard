@@ -89,6 +89,24 @@ const makePie = (chart, userData) => {
 };
 
 
+const makeLine = (chart, userData) => {
+  chart.type = 'line';
+  chart.data.datasets = []; // reset datasets
+  userData.datasets.forEach((dataset, i) => {
+    chart.data.datasets.push({
+      label: dataset.label,
+      data: dataset.data,
+      backgroundColor: backgroundColors[i],
+      borderColor: backgroundColors[i]
+    });
+  });
+  chart.data.labels = userData.labels;
+  chart.options.title.text = userData.title;
+
+  return chart;
+};
+
+
 const chartManually = (type, userData) => {
   // general data shape
   let chart = {
@@ -114,6 +132,8 @@ const chartManually = (type, userData) => {
 
   if (type === 'pie') {
     chart = makePie(chart, userData);
+  } else if (type === 'line') {
+    chart = makeLine(chart, userData);
   }
 
 
