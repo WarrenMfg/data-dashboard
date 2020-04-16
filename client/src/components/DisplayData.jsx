@@ -9,7 +9,7 @@ class DisplayData extends React.Component {
       selected: false
     };
 
-    this.handleChangeSeletedState = this.handleChangeSeletedState.bind(this);
+    this.handleChangeSelectedState = this.handleChangeSelectedState.bind(this);
   }
 
   // LIFECYCLE
@@ -22,7 +22,7 @@ class DisplayData extends React.Component {
 
 
   // CLICK HANDLERS
-  handleChangeSeletedState(e) {
+  handleChangeSelectedState(e) {
     this.setState({ selected: !this.state.selected });
   }
   
@@ -34,7 +34,7 @@ class DisplayData extends React.Component {
     return (
       <div 
         className={`DisplayData ${this.state.selected ? 'DisplayData-selected' : ''}`}
-        onClick={this.handleChangeSeletedState}
+        onClick={this.handleChangeSelectedState}
       >
 
         <p 

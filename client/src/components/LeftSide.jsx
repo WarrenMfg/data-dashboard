@@ -32,6 +32,7 @@ class LeftSide extends React.Component {
           <SelectTemplateAndData 
             POST={POST} 
             handleDisplayData={handleDisplayData}
+            displayData={displayData}
           />
         </section>
 

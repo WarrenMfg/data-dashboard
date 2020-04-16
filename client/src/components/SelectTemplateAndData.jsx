@@ -1,15 +1,17 @@
 import React from "react";
-
+import ManualForm from './ManualForm.jsx';
 
 class SelectTemplateAndData extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      chart: ''
+      chart: '',
+      manualForm: false
     };
 
     this.handleSelectChart = this.handleSelectChart.bind(this);
     this.handleDataButtons = this.handleDataButtons.bind(this);
+    this.handleHideManualForm = this.handleHideManualForm.bind(this);
   }
 
   // LIFECYCLE
@@ -39,11 +41,13 @@ class SelectTemplateAndData extends React.Component {
     if (button === 'Automatically') {
       this.props.POST({}, 'automatically', this.state.chart);
     } else if (button === 'Manually') {
-      console.log('display popup');
+      this.setState({ manualForm: true });
     }
   }
 
-  
+  handleHideManualForm() {
+    this.setState({ manualForm: false });
+  }
 
 
   // UI
@@ -70,6 +74,15 @@ class SelectTemplateAndData extends React.Component {
             <button type="button" disabled>Manually</button>
           </div>
         </section>
+
+        {
+          this.state.manualForm && 
+            <ManualForm 
+              displayData={this.props.displayData} 
+              POST={this.props.POST}
+              handleHideManualForm={this.handleHideManualForm}
+            />
+        }
 
       </div>
     );

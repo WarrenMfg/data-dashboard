@@ -1,6 +1,6 @@
 const utils = require('./utils');
 
-const createOneAutomatically = model => (data) => {
+const createOne = model => (data) => {
   return model.create(data);
 };
 
@@ -16,10 +16,24 @@ const generateNewDataAutomatically = model => async (req, res) => {
   const data = utils.chart(chart);
 
   // add to db
-  const doc = await createOneAutomatically(model)(data);
+  const doc = await createOne(model)(data);
 
   // send it
   // res.send(doc);
+  getDisplayCharts(model)(req, res);
+};
+
+
+const generateNewDataManually = model => async (req, res) => {
+  const { chart } = req.params;
+
+  // generate data
+  const data = utils.chartManually(chart, req.body);
+
+  // add to db
+  await createOne(model)(data);
+
+  // send it
   getDisplayCharts(model)(req, res);
 };
 
@@ -77,6 +91,7 @@ const updateSelectedCharts = model => async (req, res) => {
 // property values create closure over req/res functions
 module.exports = model => ({
   generateNewDataAutomatically: generateNewDataAutomatically(model),
+  generateNewDataManually: generateNewDataManually(model),
   getSelectedChartsData: getSelectedChartsData(model),
   getSelectedCharts: getSelectedCharts(model),
   getDisplayCharts: getDisplayCharts(model),

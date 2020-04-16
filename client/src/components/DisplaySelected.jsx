@@ -26,7 +26,7 @@ class DisplaySelected extends React.Component {
     return (
       <div 
         className="DisplaySelected"
-        onClick={this.handleChangeSeletedState}
+        // onClick={this.handleChangeSecletedState}
       >
 
         <p 

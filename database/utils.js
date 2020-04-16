@@ -1,5 +1,8 @@
 const faker = require('faker');
 
+
+const backgroundColors = ['rgb(57,106,177)', 'rgb(218,124,48)', 'rgb(62,150,81)', 'rgb(204,37,41)', 'rgb(83,81,84)', 'rgb(107,76,154)', 'rgb(146,36,40)', 'rgb(148,139,61)'];
+
 const generateTitle = () => {
   return faker.commerce.productName();
 };
@@ -10,7 +13,6 @@ const generateAxesNames = () => {
 
 const generateDatasets = (type, dataPoints) => {
   const datasets = [];
-  const backgroundColors = ['rgb(57,106,177)', 'rgb(218,124,48)', 'rgb(62,150,81)', 'rgb(204,37,41)', 'rgb(83,81,84)', 'rgb(107,76,154)', 'rgb(146,36,40)', 'rgb(148,139,61)'];
   const numberOfDatasets = type === 'pie' ? 1 : Math.floor( Math.random() * (3 - 1 + 1) ) + 1;
 
   for (let i = 0; i < numberOfDatasets; i++) {
@@ -75,8 +77,53 @@ const chart = (type) => {
 };
 
 
+const makePie = (chart, userData) => {
+  chart.type = 'pie';
+  chart.data.datasets[0].label = generateTitle();
+  chart.data.datasets[0].data = userData.data;
+  chart.data.datasets[0].backgroundColor = backgroundColors;
+  chart.data.datasets[0].borderColor = backgroundColors;
+  chart.data.labels = userData.labels;
+  chart.options.title.text = userData.title;
+  return chart;
+};
+
+
+const chartManually = (type, userData) => {
+  // general data shape
+  let chart = {
+    type: '',
+    data: {
+      datasets: [
+        {
+          label: '',
+          data: [],
+          backgroundColor: [],
+          borderColor: []
+        }
+      ],
+      labels: []
+    },
+    options: {
+      title: {
+        display: true,
+        text: ''
+      }
+    }
+  };
+
+  if (type === 'pie') {
+    chart = makePie(chart, userData);
+  }
+
+
+  return chart;
+};
+
+
 const utils = {
-  chart
+  chart,
+  chartManually
 };
 
 module.exports = utils;
