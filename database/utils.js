@@ -94,7 +94,7 @@ const makeLine = (chart, userData) => {
   chart.data.datasets = []; // reset datasets
   userData.datasets.forEach((dataset, i) => {
     chart.data.datasets.push({
-      label: dataset.label,
+      label: dataset.lineName,
       data: dataset.data,
       backgroundColor: backgroundColors[i],
       borderColor: backgroundColors[i]

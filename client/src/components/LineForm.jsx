@@ -21,14 +21,33 @@ class LineForm extends React.Component {
     this.handleCancel = this.handleCancel.bind(this);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.lines.length !== this.state.lines.length) {
+      const lines = document.querySelectorAll('.ManualForm-line');
+      const lastLine = lines[lines.length - 1];
+      const inputs = Array.from(lastLine.querySelectorAll('input[name|="label"]'));
+
+      this.state.labels.forEach((label, i) => {
+        inputs[i].value = label;
+      });
+    } else if (prevState.labels !== this.state.labels) {
+      this.updateAllLabels();
+    }
+  }
+
   handleChange(e) {
+    if (!e.target?.name) return;
+    if (!e.target.value) return;
     e.persist();
-    const [key, index] = e.target.name.split('-');
+
+    let [key, index] = e.target.name.split('-');
+    index = Number(index);
 
     if (key === 'title') {
       this.setState({ title: e.target.value });
       
     } else if (key === 'lineName') {
+
       this.setState(prevState => {
         const newLines = [...prevState.lines];
         newLines[index].lineName = e.target.value;
@@ -37,22 +56,21 @@ class LineForm extends React.Component {
       });
 
     } else if (key === 'label') {
-      this.setState(prevState => {
-        const newLines = [...prevState.lines];
-        newLines[index].lineName = e.target.value;
 
-        return { lines: newLines };
+      this.setState(prevState => {
+        const newLabels = [...prevState.labels];
+        newLabels[index] = e.target.value;
+
+        return { labels: newLabels };
       });
 
     } else if (key === 'data') {
-      const newLines = [];
+
+      const line = e.target.dataset.line;
 
       this.setState(prevState => {
-        prevState.lines.forEach(line => {
-          const newLineData = { ...line };
-          newLineData.labels[index] = e.target.value;
-          newLines.push(newLineData);
-        });
+        const newLines = [...prevState.lines];
+        newLines[line].data[index] = e.target.value;
 
         return { lines: newLines };
       });
@@ -61,18 +79,10 @@ class LineForm extends React.Component {
 
   addMoreData() {
     this.setState(prevState => {
-      const newLines = [];
-      const newLineData = {
-        lineName: '',
-        labels: [],
-        data: []
-      };
+      const newLines = [...prevState.lines];
 
-      prevState.lines.forEach(line => {
-        newLineData.lineName = line.lineName;
-        newLineData.labels = [...line.labels, ''];
-        newLineData.data = [...line.data, ''];
-        newLines.push(newLineData);
+      newLines.forEach(line => {
+        line.data = [...line.data, ''];
       });
 
       return { lines: newLines };
@@ -80,15 +90,15 @@ class LineForm extends React.Component {
   }
 
   addMoreLines() {
-    // copy all labels to add new line with new data
-    this.setState(prevState => {
-      const newLineData = {
-        lineName: '',
-        labels: [...prevState.lines[0].labels],
-        data: Array(prevState.lines[0].data.length).fill('')
-      };
-      const newLines = [...prevState.lines, newLineData];
+    const dataLength = this.state.lines[0].data.length;
+    const newLine = {
+      lineName: '',
+      data: Array(dataLength).fill('')
+    };
 
+    this.setState(prevState => {
+      const newLines = [...prevState.lines, newLine];
+      
       return { lines: newLines };
     });
   }
@@ -97,21 +107,9 @@ class LineForm extends React.Component {
     // overall data shape
     const data = {
       title: this.state.title,
-      datasets: [],
-      labels: this.state.lines[0].labels
+      datasets: this.state.lines,
+      labels: this.state.labels
     };
-
-    // for data.datasets
-    let dataset = {
-      label: '',
-      data: []
-    }
-    
-    this.state.lines.forEach(line => {
-      dataset.label = line.lineName;
-      dataset.data = line.data;
-      data.datasets.push(dataset);
-    });
 
     this.props.handleHideManualForm();
     this.props.POST(data, 'manually', 'line');
@@ -121,21 +119,29 @@ class LineForm extends React.Component {
     this.props.handleHideManualForm();
   }
 
+  updateAllLabels() {
+    const lines = document.querySelectorAll('.ManualForm-line');
+    lines.forEach(line => {
+      const DOMlabels = line.querySelectorAll('input[name|="label"]');
+      this.state.labels.forEach((label, i) => DOMlabels[i].value = label);
+    });
+  }
+
   render() {
-    const { title, lines } = this.state;
     return (
       <div className="ManualForm">
-        <form>
-          <p>Title:&nbsp;<input type="text" name="title-0" onChange={this.handleChange} value={title} autoFocus/></p>
+        <form onBlur={this.handleChange}>
+          <p>Title:&nbsp;<input type="text" name="title-0" autoFocus/></p>
+
           {
-            lines.map((line, i) => {
+            this.state.lines.map((line, i) => {
               return (
                 <div className="ManualForm-line" key={i}>
-                  <p>Line Name:&nbsp;<input type="text" name="lineName-0" onChange={this.handleChange} value={this.state.lines[i].lineName}/></p>
+                  <p>Line Name:&nbsp;<input type="text" name={`lineName-${i}`}/></p>
                   {
-                    line.labels.map((val, j) => {
+                    line.data.map((datum, j) => {
                       return (
-                        <p key={j}>Label:&nbsp;<input type="text" name="label-0" onChange={this.handleChange} value={this.state.lines[i].labels[j]}/>&nbsp;Data:&nbsp;<input type="text" name="data-0" onChange={this.handleChange} value={this.state.lines[i].data[j]}/></p>
+                        <p key={j}>Label:&nbsp;<input type="text" name={`label-${j}`}/>&nbsp;Data:&nbsp;<input type="text" data-line={i} name={`data-${j}`}/></p>
                       );
                     })
                   }
