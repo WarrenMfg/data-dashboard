@@ -107,6 +107,66 @@ const makeLine = (chart, userData) => {
 };
 
 
+const makeBar = (chart, userData) => {
+  chart.type = 'bar';
+  chart.data.datasets = []; // reset datasets
+  userData.datasets.forEach((dataset, i) => {
+    chart.data.datasets.push({
+      label: dataset.barName,
+      data: dataset.data,
+      backgroundColor: backgroundColors[i],
+      borderColor: backgroundColors[i]
+    });
+  });
+  chart.data.labels = userData.labels;
+  chart.options = {
+    title: {
+      display: true,
+      text: userData.title
+    },
+    scales: {
+      yAxes: [{
+        ticks: {
+          suggestedMin: 0
+        }
+      }]
+    }
+  };
+
+  return chart;
+};
+
+
+const makeHorizontalBar = (chart, userData) => {
+  chart.type = 'horizontalBar';
+  chart.data.datasets = []; // reset datasets
+  userData.datasets.forEach((dataset, i) => {
+    chart.data.datasets.push({
+      label: dataset.barName,
+      data: dataset.data,
+      backgroundColor: backgroundColors[i],
+      borderColor: backgroundColors[i]
+    });
+  });
+  chart.data.labels = userData.labels;
+  chart.options = {
+    title: {
+      display: true,
+      text: userData.title
+    },
+    scales: {
+      xAxes: [{
+        ticks: {
+          suggestedMin: 0
+        }
+      }]
+    }
+  };
+
+  return chart;
+};
+
+
 const chartManually = (type, userData) => {
   // general data shape
   let chart = {
@@ -134,6 +194,10 @@ const chartManually = (type, userData) => {
     chart = makePie(chart, userData);
   } else if (type === 'line') {
     chart = makeLine(chart, userData);
+  } else if (type === 'bar') {
+    chart = makeBar(chart, userData);
+  } else if (type === 'horizontalBar') {
+    chart = makeHorizontalBar(chart, userData);
   }
 
 
