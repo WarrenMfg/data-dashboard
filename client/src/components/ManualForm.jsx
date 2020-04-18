@@ -3,6 +3,8 @@ import PieForm from './PieForm.jsx';
 import LineForm from './LineForm.jsx';
 import BarForm from './BarForm.jsx';
 import HorizontalBarForm from './HorizontalBarForm.jsx';
+import RadarForm from './RadarForm.jsx';
+import BubbleForm from './BubbleForm.jsx';
 
 
 class ManualForm extends React.Component {
@@ -33,6 +35,16 @@ class ManualForm extends React.Component {
       />);
     } else if (type === 'horizontalBar') {
       return (<HorizontalBarForm
+        POST={this.props.POST}
+        handleHideManualForm={this.props.handleHideManualForm}
+      />);
+    } else if (type === 'radar') {
+      return (<RadarForm
+        POST={this.props.POST}
+        handleHideManualForm={this.props.handleHideManualForm}
+      />);
+    } else if (type === 'bubble') {
+      return (<BubbleForm
         POST={this.props.POST}
         handleHideManualForm={this.props.handleHideManualForm}
       />);

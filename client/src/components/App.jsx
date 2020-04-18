@@ -66,7 +66,7 @@ class App extends React.Component {
         if (a === 'selected' && b === 'charts') {
           this.GET('dashboard', JSON.stringify(this.state.selectedCharts));
         
-        } else if (a === 'automatically' || a === 'manually' || a === 'bar' || a === 'horizontalBar') {
+        } else if ( ['automatically', 'manually', 'bar', 'horizontalBar', 'radar', 'bubble', 'scatter'].includes(a) ) {
           this.setState({ displayCharts: data });
         }
       })

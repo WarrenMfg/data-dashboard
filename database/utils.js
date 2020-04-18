@@ -167,6 +167,42 @@ const makeHorizontalBar = (chart, userData) => {
 };
 
 
+const makeRadar = (chart, userData) => {
+  chart.type = 'radar';
+  chart.data.datasets = []; // reset datasets
+  userData.datasets.forEach((dataset, i) => {
+    chart.data.datasets.push({
+      label: dataset.radarName,
+      data: dataset.data,
+      backgroundColor: backgroundColors[i],
+      borderColor: backgroundColors[i]
+    });
+  });
+  chart.data.labels = userData.labels;
+  chart.options.title.text = userData.title;
+
+  return chart;
+};
+
+
+const makeBubble = (chart, userData) => {
+  chart.type = 'bubble';
+  chart.data.datasets = []; // reset datasets
+  userData.datasets.forEach((dataset, i) => {
+    chart.data.datasets.push({
+      label: dataset.setName,
+      data: dataset.data,
+      backgroundColor: backgroundColors[i],
+      borderColor: backgroundColors[i]
+    });
+  });
+  chart.data.labels = Array(userData.datasets[0].data.length).fill(null).map(() => faker.random.word().toLowerCase());
+  chart.options.title.text = userData.title;
+
+  return chart;
+};
+
+
 const chartManually = (type, userData) => {
   // general data shape
   let chart = {
@@ -198,6 +234,10 @@ const chartManually = (type, userData) => {
     chart = makeBar(chart, userData);
   } else if (type === 'horizontalBar') {
     chart = makeHorizontalBar(chart, userData);
+  } else if (type === 'radar') {
+    chart = makeRadar(chart, userData);
+  } else if (type === 'bubble') {
+    chart = makeBubble(chart, userData);
   }
 
 

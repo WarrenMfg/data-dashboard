@@ -1,13 +1,13 @@
 import React from "react";
 
 
-class BarForm extends React.Component {
+class RadarForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       title: '',
-      bars: [{
-        barName: '',
+      radars: [{
+        radarName: '',
         data: ['']
       }],
       labels: ['']
@@ -15,17 +15,17 @@ class BarForm extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.addMoreData = this.addMoreData.bind(this);
-    this.addMoreBars = this.addMoreBars.bind(this);
-    this.handleSubmitBarForm = this.handleSubmitBarForm.bind(this);
+    this.addMoreRadars = this.addMoreRadars.bind(this);
+    this.handleSubmitRadarForm = this.handleSubmitRadarForm.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.bars.length !== this.state.bars.length) {
-      // copy all labels to new set of .ManualForm-bar
-      const bars = document.querySelectorAll('.ManualForm-bar');
-      const lastBar = bars[bars.length - 1];
-      const inputs = Array.from(lastBar.querySelectorAll('input[name|="label"]'));
+    if (prevState.radars.length !== this.state.radars.length) {
+      // copy all labels to new set of .ManualForm-radar
+      const radars = document.querySelectorAll('.ManualForm-radar');
+      const lastRadar = radars[radars.length - 1];
+      const inputs = Array.from(lastRadar.querySelectorAll('input[name|="label"]'));
 
       this.state.labels.forEach((label, i) => {
         inputs[i].value = label;
@@ -47,13 +47,13 @@ class BarForm extends React.Component {
     if (key === 'title') {
       this.setState({ title: e.target.value });
       
-    } else if (key === 'barName') {
+    } else if (key === 'radarName') {
 
       this.setState(prevState => {
-        const newBars = [...prevState.bars];
-        newBars[index].barName = e.target.value;
+        const newRadars = [...prevState.radars];
+        newRadars[index].radarName = e.target.value;
 
-        return { bars: newBars };
+        return { radars: newRadars };
       });
 
     } else if (key === 'label') {
@@ -67,53 +67,53 @@ class BarForm extends React.Component {
 
     } else if (key === 'data') {
 
-      const bar = e.target.dataset.bar;
+      const radar = e.target.dataset.radar;
 
       this.setState(prevState => {
-        const newBars = [...prevState.bars];
-        newBars[bar].data[index] = e.target.value;
+        const newRadars = [...prevState.radars];
+        newRadars[radar].data[index] = e.target.value;
 
-        return { bars: newBars };
+        return { radars: newRadars };
       });
     }
   }
 
   addMoreData() {
     this.setState(prevState => {
-      const newBars = [...prevState.bars];
+      const newRadars = [...prevState.radars];
 
-      newBars.forEach(bar => {
-        bar.data = [...bar.data, ''];
+      newRadars.forEach(radar => {
+        radar.data = [...radar.data, ''];
       });
 
-      return { bars: newBars };
+      return { radars: newRadars };
     });
   }
 
-  addMoreBars() {
-    const dataLength = this.state.bars[0].data.length;
-    const newBar = {
-      barName: '',
+  addMoreRadars() {
+    const dataLength = this.state.radars[0].data.length;
+    const newRadar = {
+      radarName: '',
       data: Array(dataLength).fill('')
     };
 
     this.setState(prevState => {
-      const newBars = [...prevState.bars, newBar];
+      const newRadars = [...prevState.radars, newRadar];
       
-      return { bars: newBars };
+      return { radars: newRadars };
     });
   }
 
-  handleSubmitBarForm() {
+  handleSubmitRadarForm() {
     // overall data shape
     const data = {
       title: this.state.title,
-      datasets: this.state.bars,
+      datasets: this.state.radars,
       labels: this.state.labels
     };
 
     this.props.handleHideManualForm();
-    this.props.POST(data, 'manually', 'bar');
+    this.props.POST(data, 'manually', 'radar');
   }
 
   handleCancel() {
@@ -121,9 +121,9 @@ class BarForm extends React.Component {
   }
 
   updateAllLabels() {
-    const bars = document.querySelectorAll('.ManualForm-bar');
-    bars.forEach(bar => {
-      const DOMlabels = bar.querySelectorAll('input[name|="label"]');
+    const radars = document.querySelectorAll('.ManualForm-radar');
+    radars.forEach(radar => {
+      const DOMlabels = radar.querySelectorAll('input[name|="label"]');
       this.state.labels.forEach((label, i) => DOMlabels[i].value = label);
     });
   }
@@ -135,14 +135,14 @@ class BarForm extends React.Component {
           <p>Title:&nbsp;<input type="text" name="title-0" autoFocus/></p>
 
           {
-            this.state.bars.map((bar, i) => {
+            this.state.radars.map((radar, i) => {
               return (
-                <div className="ManualForm-bar" key={i}>
-                  <p>Bar Name:&nbsp;<input type="text" name={`barName-${i}`}/></p>
+                <div className="ManualForm-radar" key={i}>
+                  <p>Radar Name:&nbsp;<input type="text" name={`radarName-${i}`}/></p>
                   {
-                    bar.data.map((datum, j) => {
+                    radar.data.map((datum, j) => {
                       return (
-                        <p key={j}>Label:&nbsp;<input type="text" name={`label-${j}`}/>&nbsp;Data:&nbsp;<input type="text" data-bar={i} name={`data-${j}`}/></p>
+                        <p key={j}>Label:&nbsp;<input type="text" name={`label-${j}`}/>&nbsp;Data:&nbsp;<input type="text" data-radar={i} name={`data-${j}`}/></p>
                       );
                     })
                   }
@@ -153,8 +153,8 @@ class BarForm extends React.Component {
 
           <p>
             <button type="button" onClick={this.addMoreData}>+ Data</button>
-            <button type="button" onClick={this.addMoreBars}>+ Bars</button>
-            <button type="button" onClick={this.handleSubmitBarForm}>Submit</button>
+            <button type="button" onClick={this.addMoreRadars}>+ Radars</button>
+            <button type="button" onClick={this.handleSubmitRadarForm}>Submit</button>
             <button type="button" onClick={this.handleCancel}>Cancel</button>
           </p>
         </form>
@@ -163,4 +163,4 @@ class BarForm extends React.Component {
   }
 }
 
-export default BarForm;
+export default RadarForm;

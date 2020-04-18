@@ -1,7 +1,6 @@
 import React from "react";
 
 
-
 class HorizontalBarForm extends React.Component {
   constructor(props) {
     super(props);
@@ -153,8 +152,8 @@ class HorizontalBarForm extends React.Component {
           }
 
           <p>
-            <button type="button" onClick={this.addMoreData}>Add More Data</button>
-            <button type="button" onClick={this.addMoreBars}>Add More Bars</button>
+            <button type="button" onClick={this.addMoreData}>+ Data</button>
+            <button type="button" onClick={this.addMoreBars}>+ Bars</button>
             <button type="button" onClick={this.handleSubmitBarForm}>Submit</button>
             <button type="button" onClick={this.handleCancel}>Cancel</button>
           </p>

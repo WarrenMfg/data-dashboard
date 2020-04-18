@@ -1,7 +1,6 @@
 import React from "react";
 
 
-
 class LineForm extends React.Component {
   constructor(props) {
     super(props);
@@ -151,8 +150,8 @@ class LineForm extends React.Component {
           }
 
           <p>
-            <button type="button" onClick={this.addMoreData}>Add More Data</button>
-            <button type="button" onClick={this.addMoreLines}>Add More Lines</button>
+            <button type="button" onClick={this.addMoreData}>+ Data</button>
+            <button type="button" onClick={this.addMoreLines}>+ Lines</button>
             <button type="button" onClick={this.handleSubmitLineForm}>Submit</button>
             <button type="button" onClick={this.handleCancel}>Cancel</button>
           </p>

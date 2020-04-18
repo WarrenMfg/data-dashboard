@@ -1,7 +1,6 @@
 import React from "react";
 
 
-
 class PieForm extends React.Component {
   constructor(props) {
     super(props);
@@ -67,7 +66,7 @@ class PieForm extends React.Component {
           <p>Label:&nbsp;<input type="text" name="label0"/>&nbsp;Data:&nbsp;<input type="text" name="data0"/></p>
 
           <p>
-            <button type="button" onClick={this.addMorePieData}>Add More Data</button>
+            <button type="button" onClick={this.addMorePieData}>+ Data</button>
             <button type="button" onClick={this.handleSubmitPieForm}>Submit</button>
             <button type="button" onClick={this.handleCancel}>Cancel</button>
           </p>
