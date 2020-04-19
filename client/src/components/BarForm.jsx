@@ -132,17 +132,17 @@ class BarForm extends React.Component {
     return (
       <div className="ManualForm">
         <form onBlur={this.handleChange}>
-          <p>Title:&nbsp;<input type="text" name="title-0" autoFocus/></p>
+          <p>Title:&nbsp;<input type="text" name="title-0" autoFocus placeholder="chart title"/></p>
 
           {
             this.state.bars.map((bar, i) => {
               return (
                 <div className="ManualForm-bar" key={i}>
-                  <p>Bar Name:&nbsp;<input type="text" name={`barName-${i}`}/></p>
+                  <p>Bar Name:&nbsp;<input type="text" name={`barName-${i}`} placeholder="legend label"/></p>
                   {
                     bar.data.map((datum, j) => {
                       return (
-                        <p key={j}>Label:&nbsp;<input type="text" name={`label-${j}`}/>&nbsp;Data:&nbsp;<input type="text" data-bar={i} name={`data-${j}`}/></p>
+                        <p key={j}>Label:&nbsp;<input type="text" name={`label-${j}`} placeholder="x-axis"/>&nbsp;Datum:&nbsp;<input type="text" data-bar={i} name={`data-${j}`} placeholder="number"/></p>
                       );
                     })
                   }

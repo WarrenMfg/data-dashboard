@@ -130,17 +130,17 @@ class LineForm extends React.Component {
     return (
       <div className="ManualForm">
         <form onBlur={this.handleChange}>
-          <p>Title:&nbsp;<input type="text" name="title-0" autoFocus/></p>
+          <p>Title:&nbsp;<input type="text" name="title-0" autoFocus placeholder="chart title"/></p>
 
           {
             this.state.lines.map((line, i) => {
               return (
                 <div className="ManualForm-line" key={i}>
-                  <p>Line Name:&nbsp;<input type="text" name={`lineName-${i}`}/></p>
+                  <p>Line Name:&nbsp;<input type="text" name={`lineName-${i}`} placeholder="legend label"/></p>
                   {
                     line.data.map((datum, j) => {
                       return (
-                        <p key={j}>Label:&nbsp;<input type="text" name={`label-${j}`}/>&nbsp;Data:&nbsp;<input type="text" data-line={i} name={`data-${j}`}/></p>
+                        <p key={j}>Label:&nbsp;<input type="text" name={`label-${j}`} placeholder="x-axis"/>&nbsp;Datum:&nbsp;<input type="text" data-line={i} name={`data-${j}`} placeholder="number"/></p>
                       );
                     })
                   }

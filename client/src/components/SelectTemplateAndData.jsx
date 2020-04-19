@@ -27,12 +27,17 @@ class SelectTemplateAndData extends React.Component {
 
     if (chart === '') {
       buttons.forEach(button => button.disabled = true);
+      this.setState({ chart, manualForm: false });
     } else {
-      buttons.forEach(button => button.disabled = false);
+      if (this.state.manualForm) {
+        this.setState({ chart });
+      } else {
+        this.setState({ chart });
+        buttons.forEach(button => button.disabled = false);
+      }
     }
 
     this.props.handleDisplayData(chart);
-    this.setState({ chart });
   }
   
   handleDataButtons(e) {
@@ -40,16 +45,17 @@ class SelectTemplateAndData extends React.Component {
 
     if (button === 'Automatically') {
       this.props.POST({}, 'automatically', this.state.chart);
+
     } else if (button === 'Manually') {
-      if (this.state.manualForm) {
-        this.setState({ manualForm: false });
-      } else {
-        this.setState({ manualForm: true });
-      }
+      const buttons = Array.from(document.getElementsByTagName('BUTTON'));
+      buttons.forEach(button => button.disabled = true);
+      this.setState({ manualForm: true });
     }
   }
 
   handleHideManualForm() {
+    const buttons = Array.from(document.getElementsByTagName('BUTTON'));
+    buttons.forEach(button => button.disabled = false);
     this.setState({ manualForm: false });
   }
 

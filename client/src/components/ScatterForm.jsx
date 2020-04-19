@@ -107,18 +107,18 @@ class ScatterForm extends React.Component {
     return (
       <div className="ManualForm">
         <form onBlur={this.handleChange}>
-          <p>Title:&nbsp;<input type="text" name="title-0" autoFocus/></p>
+          <p>Title:&nbsp;<input type="text" name="title-0" autoFocus placeholder="chart title"/></p>
 
           {
             this.state.plots.map((plot, i) => {
               return (
                 <div className="ManualForm-scatter" key={i}>
-                  <p>Scatter Plot Name:&nbsp;<input type="text" name={`plotName-${i}`}/></p>
+                  <p>Scatter Plot Name:&nbsp;<input type="text" name={`plotName-${i}`} placeholder="legend label"/></p>
                   {
                     plot.data.map((datum, j) => {
                       return (
                         <div key={j}>
-                          <p>x:&nbsp;<input type="text" data-x={i} name={`dataX-${j}`}/>&nbsp;y:&nbsp;<input type="text" data-y={i} name={`dataY-${j}`}/></p>
+                          <p>x:&nbsp;<input type="text" data-x={i} name={`dataX-${j}`} placeholder="number"/>&nbsp;y:&nbsp;<input type="text" data-y={i} name={`dataY-${j}`} placeholder="number"/></p>
                         </div>
                       );
                     })

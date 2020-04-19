@@ -132,17 +132,17 @@ class RadarForm extends React.Component {
     return (
       <div className="ManualForm">
         <form onBlur={this.handleChange}>
-          <p>Title:&nbsp;<input type="text" name="title-0" autoFocus/></p>
+          <p>Title:&nbsp;<input type="text" name="title-0" autoFocus placeholder="chart title"/></p>
 
           {
             this.state.radars.map((radar, i) => {
               return (
                 <div className="ManualForm-radar" key={i}>
-                  <p>Radar Name:&nbsp;<input type="text" name={`radarName-${i}`}/></p>
+                  <p>Radar Name:&nbsp;<input type="text" name={`radarName-${i}`} placeholder="legend label"/></p>
                   {
                     radar.data.map((datum, j) => {
                       return (
-                        <p key={j}>Label:&nbsp;<input type="text" name={`label-${j}`}/>&nbsp;Data:&nbsp;<input type="text" data-radar={i} name={`data-${j}`}/></p>
+                        <p key={j}>Label:&nbsp;<input type="text" name={`label-${j}`} placeholder="radii name"/>&nbsp;Datum:&nbsp;<input type="text" data-radar={i} name={`data-${j}`} placeholder="number"/></p>
                       );
                     })
                   }

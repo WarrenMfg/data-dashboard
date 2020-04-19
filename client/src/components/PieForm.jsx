@@ -62,8 +62,8 @@ class PieForm extends React.Component {
     return (
       <div className="ManualForm">
         <form>
-          <p>Title:&nbsp;<input type="text" name="title" autoFocus/></p>
-          <p>Label:&nbsp;<input type="text" name="label0"/>&nbsp;Data:&nbsp;<input type="text" name="data0"/></p>
+          <p>Title:&nbsp;<input type="text" name="title" autoFocus placeholder="chart title"/></p>
+          <p>Label:&nbsp;<input type="text" name="label0" placeholder="legend label"/>&nbsp;Datum:&nbsp;<input type="text" name="data0" placeholder="number"/></p>
 
           <p>
             <button type="button" onClick={this.addMorePieData}>+ Data</button>

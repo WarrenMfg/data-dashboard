@@ -60,6 +60,11 @@ class BubbleForm extends React.Component {
         return { bubbles: newBubbles };
       });
     } else if (key === 'dataR') {
+      if (Number(e.target.value) <= 0 || Number(e.target.value) > 10) {
+        e.target.value = '';
+        e.target.focus();
+        return;
+      }
 
       const bubble = Number(e.target.dataset.r);
 
@@ -117,18 +122,18 @@ class BubbleForm extends React.Component {
     return (
       <div className="ManualForm">
         <form onBlur={this.handleChange}>
-          <p>Title:&nbsp;<input type="text" name="title-0" autoFocus/></p>
+          <p>Title:&nbsp;<input type="text" name="title-0" autoFocus placeholder="chart title"/></p>
 
           {
             this.state.bubbles.map((bubble, i) => {
               return (
                 <div className="ManualForm-bubble" key={i}>
-                  <p>Set Name:&nbsp;<input type="text" name={`setName-${i}`}/></p>
+                  <p>Set Name:&nbsp;<input type="text" name={`setName-${i}`} placeholder="legend label"/></p>
                   {
                     bubble.data.map((datum, j) => {
                       return (
                         <div key={j}>
-                          <p>x:&nbsp;<input type="text" data-x={i} name={`dataX-${j}`}/>&nbsp;y:&nbsp;<input type="text" data-y={i} name={`dataY-${j}`}/>&nbsp;r:&nbsp;<input type="text" data-r={i} name={`dataR-${j}`} placeholder="in pixels"/></p>
+                          <p>x:&nbsp;<input type="text" data-x={i} name={`dataX-${j}`} placeholder="number"/>&nbsp;y:&nbsp;<input type="text" data-y={i} name={`dataY-${j}`} placeholder="number"/>&nbsp;r:&nbsp;<input type="text" data-r={i} name={`dataR-${j}`} placeholder="number (max 10)"/></p>
                         </div>
                       );
                     })
