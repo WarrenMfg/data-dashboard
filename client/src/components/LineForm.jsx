@@ -20,8 +20,31 @@ class LineForm extends React.Component {
     this.handleCancel = this.handleCancel.bind(this);
   }
 
+  componentDidMount() {
+    // if editing, populate state with chartData
+    if (this.props.chartData) {
+      const title = this.props.chartData.options.title.text;
+      const lines = [];
+      this.props.chartData.data.datasets.forEach(dataset => {
+        lines.push({
+          lineName: dataset.label,
+          data: dataset.data
+        });
+      });
+      const labels = [...this.props.chartData.data.labels];
+
+      this.setState({ title, lines, labels });
+    }
+  }
+
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.lines.length !== this.state.lines.length) {
+    if (prevState.title !== this.state.title && prevState.lines !== this.state.lines && prevState.labels !== this.state.labels) {
+      document.querySelector('input[name|="title"]').value = this.state.title;
+      document.querySelectorAll('input[name|="lineName"]').forEach((input, i) => input.value = this.state.lines[i].lineName);
+      this.updateAllLabels();
+      this.updateAllData();
+
+    } else if (prevState.lines.length !== this.state.lines.length) {
       const lines = document.querySelectorAll('.ManualForm-line');
       const lastLine = lines[lines.length - 1];
       const inputs = Array.from(lastLine.querySelectorAll('input[name|="label"]'));
@@ -29,6 +52,7 @@ class LineForm extends React.Component {
       this.state.labels.forEach((label, i) => {
         inputs[i].value = label;
       });
+
     } else if (prevState.labels !== this.state.labels) {
       this.updateAllLabels();
     }
@@ -110,8 +134,12 @@ class LineForm extends React.Component {
       labels: this.state.labels
     };
 
+    // if editing, add id property for findOneAndUpdate in database
+    if (this.props.chartData) data.id = this.props.chartData._id;
+
+    // POST for new chart, PUT for editing existing chart
+    this.props.POST ? this.props.POST(data, 'manually', 'line') : this.props.PUT(data, 'manually', 'line');
     this.props.handleHideManualForm();
-    this.props.POST(data, 'manually', 'line');
   }
 
   handleCancel() {
@@ -123,6 +151,14 @@ class LineForm extends React.Component {
     lines.forEach(line => {
       const DOMlabels = line.querySelectorAll('input[name|="label"]');
       this.state.labels.forEach((label, i) => DOMlabels[i].value = label);
+    });
+  }
+
+  updateAllData() {
+    const lines = document.querySelectorAll('.ManualForm-line');
+    lines.forEach((line, i) => {
+      line.querySelectorAll('input[name|="data"]')
+        .forEach((datum, j) => datum.value = this.state.lines[i].data[j]);
     });
   }
 

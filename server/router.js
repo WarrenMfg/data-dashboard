@@ -17,7 +17,8 @@ Router.route('/automatically/:chart')
   .post(recordController.generateNewDataAutomatically);
 
 Router.route('/manually/:chart')
-  .post(recordController.generateNewDataManually);
+  .post(recordController.generateNewDataManually)
+  .put(recordController.updateData);
 
   
 // Dashboard

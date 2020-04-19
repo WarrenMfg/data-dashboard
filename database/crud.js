@@ -72,12 +72,11 @@ const getDisplayCharts = model => (req, res) => {
   model.find({ type: chart }).sort({ _id: -1 }).lean().exec()
     .then(docs => res.send(docs))
     .catch(err => res.send(err));
-
 };
 
 
 const updateSelectedCharts = model => async (req, res) => {
-  const doc = await model.findOneAndUpdate({ selectedCharts: { $exists: true } }, {selectedCharts: req.body}, { new: true });
+  const doc = await model.findOneAndUpdate({ selectedCharts: { $exists: true } }, {selectedCharts: req.body}, { new: true }).lean().exec();
   if (doc) {
     res.send(doc);
   } else {
@@ -88,6 +87,16 @@ const updateSelectedCharts = model => async (req, res) => {
 };
 
 
+const updateData = model => (req, res) => {
+  const { chart } = req.params;
+
+  const updatedChartDataStructure = utils.chartManually(chart, req.body);
+
+  model.findOneAndUpdate({ _id: req.body.id }, updatedChartDataStructure, { new: true }).lean().exec()
+    .then(doc => res.send(doc));
+};
+
+
 // property values create closure over req/res functions
 module.exports = model => ({
   generateNewDataAutomatically: generateNewDataAutomatically(model),
@@ -95,5 +104,6 @@ module.exports = model => ({
   getSelectedChartsData: getSelectedChartsData(model),
   getSelectedCharts: getSelectedCharts(model),
   getDisplayCharts: getDisplayCharts(model),
-  updateSelectedCharts: updateSelectedCharts(model)
+  updateSelectedCharts: updateSelectedCharts(model),
+  updateData: updateData(model)
 });

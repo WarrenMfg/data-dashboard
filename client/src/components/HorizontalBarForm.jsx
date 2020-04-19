@@ -20,8 +20,31 @@ class HorizontalBarForm extends React.Component {
     this.handleCancel = this.handleCancel.bind(this);
   }
 
+  componentDidMount() {
+    // if editing, populate state with chartData
+    if (this.props.chartData) {
+      const title = this.props.chartData.options.title.text;
+      const bars = [];
+      this.props.chartData.data.datasets.forEach(dataset => {
+        bars.push({
+          barName: dataset.label,
+          data: dataset.data
+        });
+      });
+      const labels = [...this.props.chartData.data.labels];
+
+      this.setState({ title, bars, labels });
+    }
+  }
+
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.bars.length !== this.state.bars.length) {
+    if (prevState.title !== this.state.title && prevState.bars !== this.state.bars && prevState.labels !== this.state.labels) {
+      document.querySelector('input[name|="title"]').value = this.state.title;
+      document.querySelectorAll('input[name|="barName"]').forEach((input, i) => input.value = this.state.bars[i].barName);
+      this.updateAllLabels();
+      this.updateAllData();
+
+    } else if (prevState.bars.length !== this.state.bars.length) {
       // copy all labels to new set of .ManualForm-bar
       const bars = document.querySelectorAll('.ManualForm-bar');
       const lastBar = bars[bars.length - 1];
@@ -112,8 +135,12 @@ class HorizontalBarForm extends React.Component {
       labels: this.state.labels
     };
 
+    // if editing, add id property for findOneAndUpdate in database
+    if (this.props.chartData) data.id = this.props.chartData._id;
+
+    // POST for new chart, PUT for editing existing chart
+    this.props.POST ? this.props.POST(data, 'manually', 'horizontalBar') : this.props.PUT(data, 'manually', 'horizontalBar');
     this.props.handleHideManualForm();
-    this.props.POST(data, 'manually', 'horizontalBar');
   }
 
   handleCancel() {
@@ -125,6 +152,14 @@ class HorizontalBarForm extends React.Component {
     bars.forEach(bar => {
       const DOMlabels = bar.querySelectorAll('input[name|="label"]');
       this.state.labels.forEach((label, i) => DOMlabels[i].value = label);
+    });
+  }
+
+  updateAllData() {
+    const bars = document.querySelectorAll('.ManualForm-bar');
+    bars.forEach((bar, i) => {
+      bar.querySelectorAll('input[name|="data"]')
+        .forEach((datum, j) => datum.value = this.state.bars[i].data[j]);
     });
   }
 

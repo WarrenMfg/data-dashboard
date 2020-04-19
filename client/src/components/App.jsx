@@ -16,6 +16,7 @@ class App extends React.Component {
     };
 
     this.POST = this.POST.bind(this);
+    this.PUT = this.PUT.bind(this);
     this.handleDisplayData = this.handleDisplayData.bind(this);
     this.handleSelectedCharts = this.handleSelectedCharts.bind(this);
   }
@@ -72,6 +73,14 @@ class App extends React.Component {
       })
       .catch(err => console.error(err));
   }
+
+  PUT(data, a, b) {
+    api.PUT(data, a, b)
+      .then(res => res.json())
+      .then(() => this.GET('dashboard', JSON.stringify(this.state.selectedCharts)))
+      .catch(err => console.error(err));
+  }
+
 
   DELETE() {
 
@@ -145,6 +154,7 @@ class App extends React.Component {
         <div className="App-sides">
           <LeftSide 
             POST={this.POST}
+            PUT={this.PUT}
             handleDisplayData={this.handleDisplayData}
             displayCharts={this.state.displayCharts}
             handleSelectedCharts={this.handleSelectedCharts}
@@ -154,6 +164,7 @@ class App extends React.Component {
           />
           <RightSide 
             dashboardData={dashboardData}
+            handleSelectedCharts={this.handleSelectedCharts}
           />
         </div>
       </div>

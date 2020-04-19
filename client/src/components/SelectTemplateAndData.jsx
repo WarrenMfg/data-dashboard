@@ -91,6 +91,7 @@ class SelectTemplateAndData extends React.Component {
               displayData={this.props.displayData} 
               POST={this.props.POST}
               handleHideManualForm={this.handleHideManualForm}
+              editMode={false}
             />
         }
 

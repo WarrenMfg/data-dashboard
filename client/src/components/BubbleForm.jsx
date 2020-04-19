@@ -9,7 +9,7 @@ class BubbleForm extends React.Component {
       bubbles: [{
         setName: '',
         data: [{ x: '', y: '', r: '' }]
-      }],
+      }]
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -17,6 +17,30 @@ class BubbleForm extends React.Component {
     this.addMoreSets = this.addMoreSets.bind(this);
     this.handleSubmitBubbleForm = this.handleSubmitBubbleForm.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
+  }
+
+  componentDidMount() {
+    // if editing, populate state with chartData
+    if (this.props.chartData) {
+      const title = this.props.chartData.options.title.text;
+      const bubbles = [];
+      this.props.chartData.data.datasets.forEach(dataset => {
+        bubbles.push({
+          setName: dataset.label,
+          data: dataset.data
+        });
+      });
+
+      this.setState({ title, bubbles });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.title !== this.state.title && prevState.bubbles !== this.state.bubbles) {
+      document.querySelector('input[name|="title"]').value = this.state.title;
+      document.querySelectorAll('input[name|="setName"]').forEach((input, i) => input.value = this.state.bubbles[i].setName);
+      this.updateAllData();
+    }
   }
 
   handleChange(e) {
@@ -110,12 +134,30 @@ class BubbleForm extends React.Component {
       datasets: this.state.bubbles
     };
 
+    // if editing, add id property for findOneAndUpdate in database
+    if (this.props.chartData) data.id = this.props.chartData._id;
+
+    // POST for new chart, PUT for editing existing chart
+    this.props.POST ? this.props.POST(data, 'manually', 'bubble') : this.props.PUT(data, 'manually', 'bubble');
     this.props.handleHideManualForm();
-    this.props.POST(data, 'manually', 'bubble');
   }
 
   handleCancel() {
     this.props.handleHideManualForm();
+  }
+
+  updateAllData() {
+    const bubbles = document.querySelectorAll('.ManualForm-bubble');
+    bubbles.forEach((bubble, i) => {
+      bubble.querySelectorAll('input[name|="dataX"]')
+        .forEach((datum, j) => datum.value = this.state.bubbles[i].data[j].x);
+
+      bubble.querySelectorAll('input[name|="dataY"]')
+        .forEach((datum, j) => datum.value = this.state.bubbles[i].data[j].y);
+
+      bubble.querySelectorAll('input[name|="dataR"]')
+        .forEach((datum, j) => datum.value = this.state.bubbles[i].data[j].r);
+    });
   }
 
   render() {

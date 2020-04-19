@@ -26,7 +26,7 @@ class RightSide extends React.Component {
 
     return (
       <div className="RightSide">
-        {dashboardData.map(chart => <Canvas key={chart._id} chart={chart} />)}
+        {dashboardData.map(chart => <Canvas key={chart._id} chart={chart} handleSelectedCharts={this.props.handleSelectedCharts} />)}
       </div>
     );
   }

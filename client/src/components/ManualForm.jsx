@@ -22,37 +22,58 @@ class ManualForm extends React.Component {
     if (type === 'pie') {
       return (<PieForm 
         POST={this.props.POST}
+        PUT={this.props.PUT}
+        chartData={this.props.chartData}
         handleHideManualForm={this.props.handleHideManualForm}
+        editMode={this.props.editMode}
       />);
     } else if (type === 'line') {
       return (<LineForm
         POST={this.props.POST}
+        PUT={this.props.PUT}
+        chartData={this.props.chartData}
         handleHideManualForm={this.props.handleHideManualForm}
+        editMode={this.props.editMode}
       />);
     } else if (type === 'bar') {
       return (<BarForm
         POST={this.props.POST}
+        PUT={this.props.PUT}
+        chartData={this.props.chartData}
         handleHideManualForm={this.props.handleHideManualForm}
+        editMode={this.props.editMode}
       />);
     } else if (type === 'horizontalBar') {
       return (<HorizontalBarForm
         POST={this.props.POST}
+        PUT={this.props.PUT}
+        chartData={this.props.chartData}
         handleHideManualForm={this.props.handleHideManualForm}
+        editMode={this.props.editMode}
       />);
     } else if (type === 'radar') {
       return (<RadarForm
         POST={this.props.POST}
+        PUT={this.props.PUT}
+        chartData={this.props.chartData}
         handleHideManualForm={this.props.handleHideManualForm}
+        editMode={this.props.editMode}
       />);
     } else if (type === 'bubble') {
       return (<BubbleForm
         POST={this.props.POST}
+        PUT={this.props.PUT}
+        chartData={this.props.chartData}
         handleHideManualForm={this.props.handleHideManualForm}
+        editMode={this.props.editMode}
       />);
     } else if (type === 'scatter') {
       return (<ScatterForm
         POST={this.props.POST}
+        PUT={this.props.PUT}
+        chartData={this.props.chartData}
         handleHideManualForm={this.props.handleHideManualForm}
+        editMode={this.props.editMode}
       />);
     }
   }

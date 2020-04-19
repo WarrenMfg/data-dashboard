@@ -20,8 +20,31 @@ class RadarForm extends React.Component {
     this.handleCancel = this.handleCancel.bind(this);
   }
 
+  componentDidMount() {
+    // if editing, populate state with chartData
+    if (this.props.chartData) {
+      const title = this.props.chartData.options.title.text;
+      const radars = [];
+      this.props.chartData.data.datasets.forEach(dataset => {
+        radars.push({
+          radarName: dataset.label,
+          data: dataset.data
+        });
+      });
+      const labels = [...this.props.chartData.data.labels];
+
+      this.setState({ title, radars, labels });
+    }
+  }
+
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.radars.length !== this.state.radars.length) {
+    if (prevState.title !== this.state.title && prevState.radars !== this.state.radars && prevState.labels !== this.state.labels) {
+      document.querySelector('input[name|="title"]').value = this.state.title;
+      document.querySelectorAll('input[name|="radarName"]').forEach((input, i) => input.value = this.state.radars[i].radarName);
+      this.updateAllLabels();
+      this.updateAllData();
+
+    } else if (prevState.radars.length !== this.state.radars.length) {
       // copy all labels to new set of .ManualForm-radar
       const radars = document.querySelectorAll('.ManualForm-radar');
       const lastRadar = radars[radars.length - 1];
@@ -112,8 +135,12 @@ class RadarForm extends React.Component {
       labels: this.state.labels
     };
 
+    // if editing, add id property for findOneAndUpdate in database
+    if (this.props.chartData) data.id = this.props.chartData._id;
+
+    // POST for new chart, PUT for editing existing chart
+    this.props.POST ? this.props.POST(data, 'manually', 'radar') : this.props.PUT(data, 'manually', 'radar');
     this.props.handleHideManualForm();
-    this.props.POST(data, 'manually', 'radar');
   }
 
   handleCancel() {
@@ -125,6 +152,14 @@ class RadarForm extends React.Component {
     radars.forEach(radar => {
       const DOMlabels = radar.querySelectorAll('input[name|="label"]');
       this.state.labels.forEach((label, i) => DOMlabels[i].value = label);
+    });
+  }
+
+  updateAllData() {
+    const radars = document.querySelectorAll('.ManualForm-radar');
+    radars.forEach((radar, i) => {
+      radar.querySelectorAll('input[name|="data"]')
+        .forEach((datum, j) => datum.value = this.state.radars[i].data[j]);
     });
   }
 

@@ -19,6 +19,30 @@ class ScatterForm extends React.Component {
     this.handleCancel = this.handleCancel.bind(this);
   }
 
+  componentDidMount() {
+    // if editing, populate state with chartData
+    if (this.props.chartData) {
+      const title = this.props.chartData.options.title.text;
+      const plots = [];
+      this.props.chartData.data.datasets.forEach(dataset => {
+        plots.push({
+          plotName: dataset.label,
+          data: dataset.data
+        });
+      });
+
+      this.setState({ title, plots });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.title !== this.state.title && prevState.plots !== this.state.plots) {
+      document.querySelector('input[name|="title"]').value = this.state.title;
+      document.querySelectorAll('input[name|="plotName"]').forEach((input, i) => input.value = this.state.plots[i].plotName);
+      this.updateAllData();
+    }
+  }
+
   handleChange(e) {
     if (!e.target?.name) return;
     if (!e.target.value) return;
@@ -95,12 +119,27 @@ class ScatterForm extends React.Component {
       datasets: this.state.plots
     };
 
+    // if editing, add id property for findOneAndUpdate in database
+    if (this.props.chartData) data.id = this.props.chartData._id;
+
+    // POST for new chart, PUT for editing existing chart
+    this.props.POST ? this.props.POST(data, 'manually', 'scatter') : this.props.PUT(data, 'manually', 'scatter');
     this.props.handleHideManualForm();
-    this.props.POST(data, 'manually', 'scatter');
   }
 
   handleCancel() {
     this.props.handleHideManualForm();
+  }
+
+  updateAllData() {
+    const plots = document.querySelectorAll('.ManualForm-scatter');
+    plots.forEach((plot, i) => {
+      plot.querySelectorAll('input[name|="dataX"]')
+        .forEach((datum, j) => datum.value = this.state.plots[i].data[j].x);
+
+      plot.querySelectorAll('input[name|="dataY"]')
+        .forEach((datum, j) => datum.value = this.state.plots[i].data[j].y);
+    });
   }
 
   render() {

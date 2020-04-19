@@ -6,7 +6,7 @@ class Canvas extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      
+      chart: null
     };
   }
 
@@ -14,9 +14,21 @@ class Canvas extends React.Component {
   componentDidMount() {
     Chart.defaults.global.responsive = true;
     Chart.defaults.global.title.fontSize = 20;
-    const { _id, type, data } = this.props.chart;
+    const { _id } = this.props.chart;
     const ctx = document.getElementById(_id).getContext('2d');
-    new Chart(ctx, this.props.chart);
+    const chart = new Chart(ctx, this.props.chart);
+    this.setState({ chart });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.chart !== this.props.chart) {
+      this.state.chart.destroy();
+
+      const { _id } = this.props.chart;
+      const ctx = document.getElementById(_id).getContext('2d');
+      const chart = new Chart(ctx, this.props.chart);
+      this.setState({ chart });
+    }
   }
 
   componentWillUnMount() {
@@ -25,7 +37,6 @@ class Canvas extends React.Component {
   }
 
   // CLICK HANDLERS
-  
   
 
   // UI

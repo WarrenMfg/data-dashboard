@@ -8,6 +8,8 @@ class DisplaySelected extends React.Component {
     this.state = {
 
     };
+
+    this.handleEdit = this.handleEdit.bind(this);
   }
 
   // LIFECYCLE
@@ -17,7 +19,10 @@ class DisplaySelected extends React.Component {
 
 
   // CLICK HANDLERS
-  
+  handleEdit(e) {
+    e.stopPropagation();
+    this.props.handleEnableEditMode(this.props.chart);
+  }
 
   // UI
   render() {
@@ -26,7 +31,7 @@ class DisplaySelected extends React.Component {
     return (
       <div 
         className="DisplaySelected"
-        // onClick={this.handleChangeSecletedState}
+        onClick={this.handleEdit}
       >
 
         <p 

@@ -14,6 +14,17 @@ function POST(data, a, b) {
 }
 
 
+function PUT(data, a, b) {
+  return fetch(`/api/${a}/${b}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  });
+}
+
+
 function DELETE(record, sortBy, order) {
   return fetch(`/api/data/one/${sortBy}/${order}`, {
     method: 'DELETE',
@@ -27,6 +38,7 @@ function DELETE(record, sortBy, order) {
 const api = {
   GET,
   POST,
+  PUT,
   DELETE
 };
 
