@@ -10,7 +10,6 @@ class BubbleForm extends React.Component {
         setName: '',
         data: [{ x: '', y: '', r: '' }]
       }],
-      // labels: ['']
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -19,22 +18,6 @@ class BubbleForm extends React.Component {
     this.handleSubmitBubbleForm = this.handleSubmitBubbleForm.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
   }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevState.bubbles.length !== this.state.bubbles.length) {
-  //     // copy all labels to new set of .ManualForm-bubble
-  //     const bubbles = document.querySelectorAll('.ManualForm-bubble');
-  //     const lastBubble = bubbles[bubbles.length - 1];
-  //     const inputs = Array.from(lastBubble.querySelectorAll('input[name|="label"]'));
-
-  //     this.state.labels.forEach((label, i) => {
-  //       inputs[i].value = label;
-  //     });
-  //   } else if (prevState.labels !== this.state.labels) {
-  //     // if one label from one set changes, update all sets
-  //     this.updateAllLabels();
-  //   }
-  // }
 
   handleChange(e) {
     if (!e.target?.name) return;
@@ -55,15 +38,6 @@ class BubbleForm extends React.Component {
 
         return { bubbles: newBubbles };
       });
-
-    // } else if (key === 'label') {
-
-    //   this.setState(prevState => {
-    //     const newLabels = [...prevState.labels];
-    //     newLabels[index] = e.target.value;
-
-    //     return { labels: newLabels };
-    //   });
 
     } else if (key === 'dataX') {
 
@@ -129,7 +103,6 @@ class BubbleForm extends React.Component {
     const data = {
       title: this.state.title,
       datasets: this.state.bubbles
-      // labels: this.state.labels
     };
 
     this.props.handleHideManualForm();
@@ -139,14 +112,6 @@ class BubbleForm extends React.Component {
   handleCancel() {
     this.props.handleHideManualForm();
   }
-
-  // updateAllLabels() {
-  //   const bubbles = document.querySelectorAll('.ManualForm-bubble');
-  //   bubbles.forEach(bubble => {
-  //     const DOMlabels = bubble.querySelectorAll('input[name|="label"]');
-  //     this.state.labels.forEach((label, i) => DOMlabels[i].value = label);
-  //   });
-  // }
 
   render() {
     return (
@@ -163,7 +128,6 @@ class BubbleForm extends React.Component {
                     bubble.data.map((datum, j) => {
                       return (
                         <div key={j}>
-                          {/* <p>Label:&nbsp;<input type="text" name={`label-${j}`}/></p> */}
                           <p>x:&nbsp;<input type="text" data-x={i} name={`dataX-${j}`}/>&nbsp;y:&nbsp;<input type="text" data-y={i} name={`dataY-${j}`}/>&nbsp;r:&nbsp;<input type="text" data-r={i} name={`dataR-${j}`} placeholder="in pixels"/></p>
                         </div>
                       );

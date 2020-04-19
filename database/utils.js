@@ -203,6 +203,36 @@ const makeBubble = (chart, userData) => {
 };
 
 
+const makeScatter = (chart, userData) => {
+  chart.type = 'scatter';
+  chart.data.datasets = []; // reset datasets
+  userData.datasets.forEach((dataset, i) => {
+    chart.data.datasets.push({
+      label: dataset.plotName,
+      data: dataset.data,
+      backgroundColor: backgroundColors[i],
+      borderColor: backgroundColors[i]
+    });
+  });
+  chart.data.labels = Array(userData.datasets[0].data.length).fill(null).map(() => faker.random.word().toLowerCase());
+  chart.options.title.text = userData.title;
+  chart.options = {
+    title: {
+      display: true,
+      text: userData.title
+    },
+    scales: {
+      xAxes: [{
+        type: 'linear',
+        position: 'bottom'
+      }]
+    }
+  };
+
+  return chart;
+};
+
+
 const chartManually = (type, userData) => {
   // general data shape
   let chart = {
@@ -238,6 +268,8 @@ const chartManually = (type, userData) => {
     chart = makeRadar(chart, userData);
   } else if (type === 'bubble') {
     chart = makeBubble(chart, userData);
+  } else if (type === 'scatter') {
+    chart = makeScatter(chart, userData);
   }
 
 
