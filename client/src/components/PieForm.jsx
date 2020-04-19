@@ -38,7 +38,7 @@ class PieForm extends React.Component {
   }
 
   handleCancel() {
-    this.props.handleHideManualForm();
+    this.props.handleHideManualForm(this.props.editMode);
   }
 
   handleChange(e) {
@@ -88,7 +88,7 @@ class PieForm extends React.Component {
 
     // POST for new chart, PUT for editing existing chart
     this.props.POST ? this.props.POST(data, 'manually', 'pie') : this.props.PUT(data, 'manually', 'pie');
-    this.props.handleHideManualForm();
+    this.props.handleHideManualForm(this.props.editMode);
   }
 
   render() {

@@ -31,7 +31,7 @@ class LeftSide extends React.Component {
 
   handleHideManualForm() {
     const buttons = Array.from(document.getElementsByTagName('BUTTON'));
-    buttons.forEach(button => button.disabled = false);
+    buttons.forEach(button => button.disabled = true);
 
     document.getElementsByTagName('SELECT')[0].disabled = false;
 
